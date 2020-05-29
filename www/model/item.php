@@ -7,7 +7,7 @@ require_once MODEL_PATH . 'db.php';
 function get_item($db, $item_id){
   $sql = "
     SELECT
-      item_id, 
+      item_id,
       name,
       stock,
       price,
@@ -25,7 +25,7 @@ function get_item($db, $item_id){
 function get_items($db, $is_open = false){
   $sql = '
     SELECT
-      item_id, 
+      item_id,
       name,
       stock,
       price,
@@ -61,14 +61,14 @@ function regist_item($db, $name, $price, $stock, $status, $image){
 
 function regist_item_transaction($db, $name, $price, $stock, $status, $image, $filename){
   $db->beginTransaction();
-  if(insert_item($db, $name, $price, $stock, $filename, $status) 
+  if(insert_item($db, $name, $price, $stock, $filename, $status)
     && save_image($image, $filename)){
     $db->commit();
     return true;
   }
   $db->rollback();
   return false;
-  
+
 }
 
 function insert_item($db, $name, $price, $stock, $filename, $status){
@@ -98,7 +98,7 @@ function update_item_status($db, $item_id, $status){
       item_id = {$item_id}
     LIMIT 1
   ";
-  
+
   return execute_query($db, $sql);
 }
 
@@ -107,13 +107,15 @@ function update_item_stock($db, $item_id, $stock){
     UPDATE
       items
     SET
-      stock = {$stock}
+      stock = ?
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
-  
-  return execute_query($db, $sql);
+
+  $params = array($stock, $item_id);
+
+  return execute_query($db, $sql, $params);
 }
 
 function destroy_item($db, $item_id){
@@ -139,7 +141,7 @@ function delete_item($db, $item_id){
       item_id = {$item_id}
     LIMIT 1
   ";
-  
+
   return execute_query($db, $sql);
 }
 
