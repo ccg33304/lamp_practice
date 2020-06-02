@@ -142,3 +142,40 @@ function h($str) {
 function hprint($str) {
   print h($str);
 }
+
+// トークン生成
+function get_csrf_token() {
+  $token = sha1(openssl_random_pseudo_bytes(12));
+  set_session('csrf_token', $token);
+  return $token;
+}
+
+// トークンのチェック
+function is_valid_csrf_token($token) {
+  if ($token === '') {
+    return false;
+  }
+  $session_token = get_session('csrf_token');
+
+  if ($session_token === null) {
+    return false;
+  }
+
+  if ($token === $session_token) {
+    // チェックが通ったらトークンを破棄してtrueを返す
+    destroy_csrf_token();
+    return true;
+  } else {
+    return false;
+  };
+}
+
+// トークン破棄
+function destroy_csrf_token() {
+  set_session('csrf_token', null);
+}
+
+//
+function is_post_request() {
+  return $_SERVER['REQUEST_METHOD'] === 'POST';
+}

@@ -18,18 +18,23 @@ if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
 
-$name = get_post('name');
-$price = get_post('price');
+$name   = get_post('name');
+$price  = get_post('price');
 $status = get_post('status');
-$stock = get_post('stock');
+$stock  = get_post('stock');
 
-$image = get_file('image');
+$image  = get_file('image');
 
-if(regist_item($db, $name, $price, $stock, $status, $image)){
-  set_message('商品を登録しました。');
-}else {
-  set_error('商品の登録に失敗しました。');
+$token  = get_post('token');
+
+if (is_post_request() && is_valid_csrf_token($token)) {
+  if(regist_item($db, $name, $price, $stock, $status, $image)){
+    set_message('商品を登録しました。');
+  }else {
+    set_error('商品の登録に失敗しました。');
+  }
+} else {
+  set_error('不正なリクエストです。');
 }
-
 
 redirect_to(ADMIN_URL);

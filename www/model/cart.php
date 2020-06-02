@@ -125,9 +125,7 @@ function insert_order_detail($db, $order_id, $item_id, $price, $amount) {
       )
     VALUES
         (?, ?, ?, ?)';
-
-
-
+        
     return execute_query($db, $sql, array($order_id, $item_id, $price, $amount));
 }
 
