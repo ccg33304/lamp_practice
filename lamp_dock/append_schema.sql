@@ -10,5 +10,6 @@ CREATE TABLE order_details
   (
     order_id INT,
     item_id INT NOT NULL,
+    price INT NOT NULL,
     amount INT NOT NULL
   );
