@@ -50,3 +50,6 @@ define('PERMITTED_IMAGE_TYPES', array(
   IMAGETYPE_JPEG => 'jpg',
   IMAGETYPE_PNG => 'png',
 ));
+
+// 商品一覧画面で一度に表示する商品の数
+define('DISPLAY_ITEM_NUM', 4);
