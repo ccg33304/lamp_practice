@@ -10,12 +10,14 @@
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
 
-
   <div class="container">
     <h1>商品一覧</h1>
-    <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
-    <div class="card-deck">
+    <?php include VIEW_PATH . 'templates/messages.php'; ?>
+    <?php include VIEW_PATH . 'templates/index_pagination.php'; ?>
+
+    <div class="text-right"><?php hprint($display_index); ?></div>
+    <div class="card-deck mb-4">
       <div class="row">
       <?php foreach($items as $item){ ?>
         <div class="col-6 item">
@@ -43,6 +45,9 @@
       <?php } ?>
       </div>
     </div>
+
+    <?php include VIEW_PATH . 'templates/index_pagination.php'; ?>
+    
   </div>
 
 </body>
